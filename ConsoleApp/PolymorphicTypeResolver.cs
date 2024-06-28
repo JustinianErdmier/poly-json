@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Core;
 
-public class PolymorphicTypeResolver<T> : DefaultJsonTypeInfoResolver
+public class PolymorphicTypeResolver<T, TK> : DefaultJsonTypeInfoResolver
+    where TK : Attribute
 {
     private Assembly[] _assembliesToScan;
 
@@ -21,7 +22,7 @@ public class PolymorphicTypeResolver<T> : DefaultJsonTypeInfoResolver
             .SelectMany(a =>
                 a
                     .GetTypes()
-                    .Where(t => t.GetCustomAttributes<AggregateAttribute>(inherit: true).Any())
+                    .Where(t => t.GetCustomAttributes(typeof(TK), inherit: true).Any())
                     .ToList());
 
         List<JsonDerivedType> derivedTypes = new();

@@ -5,7 +5,7 @@ using Core;
 
 var options = new JsonSerializerOptions
 {
-    TypeInfoResolver = new PolymorphicTypeResolver<AggregateRoot>(
+    TypeInfoResolver = new PolymorphicTypeResolver<AggregateRoot, AggregateAttribute>(
         typeof(Lib1.Class1).Assembly,
         typeof(Lib2.Class1).Assembly
     )
